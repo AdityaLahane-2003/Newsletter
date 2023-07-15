@@ -3,7 +3,8 @@ const request = require("request");
 const bodyParser = require("body-parser");
 const https = require("https");
 const app=express();
-
+const dotenv = require("dotenv");
+dotenv.config();
 //We use fuunction of Express that is statis to use the local css file and Images 
 app.use(express.static("public")); 
 app.use(bodyParser.urlencoded({extended:true})); 
@@ -30,10 +31,10 @@ app.post("/", function (req,res) {
         ]
     }
     const jsonData = JSON.stringify(data);
-    const url = "https://us21.api.mailchimp.com/3.0/lists/15b775ed83"; 
+    const url = `https://us21.api.mailchimp.com/3.0/lists/${process.env.UNIQUEUE_KEY}`; 
     const options = {
         method:"POST", 
-        auth:"aditya:257f73b586d8bb70cd2595799a1c6ef2-us21"
+        auth:`aditya:${process.env.API_KEY}`
     } 
 
 
@@ -63,6 +64,3 @@ app.post("/failure", function (req,res) {
 app.listen(process.env.PORT ||3000, function () {
     console.log("Server Running"); 
 })
-
-//b99511cddc815acf22a751546c165dd4-us21m -- API KEY 
-//15b775ed83 -- Unique ID 
